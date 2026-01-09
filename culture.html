@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultural Heritage of Buddha Jumps Over the Wall</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    
+    <style>
+        :root {
+            --jade-green: #2D5A3D;
+            --warm-coral: #E67E4D;
+            --soft-gold: #D4AF37;
+            --warm-cream: #FAF7F2;
+            --charcoal: #2C3E50;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--warm-cream);
+            color: var(--charcoal);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .cultural-bg {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(45, 90, 61, 0.1) 100%);
+        }
+        
+        .timeline-container {
+            position: relative;
+            overflow-x: auto;
+            padding: 2rem 0;
+        }
+        
+        .timeline {
+            display: flex;
+            min-width: 1200px;
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--jade-green), var(--warm-coral), var(--soft-gold));
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            flex: 1;
+            position: relative;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            background: white;
+            border: 4px solid var(--jade-green);
+            border-radius: 50%;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover::before,
+        .timeline-item.active::before {
+            width: 24px;
+            height: 24px;
+            border-width: 6px;
+            background: var(--soft-gold);
+        }
+        
+        .timeline-content {
+            margin-top: 3rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item.active .timeline-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .story-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(250, 247, 242, 0.95) 100%);
+            border: 2px solid rgba(45, 90, 61, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .story-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(45, 90, 61, 0.15);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--warm-coral);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .origin-story {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(45, 90, 61, 0.1);
+        }
+        
+        .map-container {
+            background: linear-gradient(135deg, rgba(45, 90, 61, 0.05) 0%, rgba(230, 126, 77, 0.05) 100%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <h1 class="font-display text-xl font-bold text-gray-800">Buddha Jumps Biochemistry Research</h1>
+                </div>
+                <div class="flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-gray-900 font-medium">Home</a>
+                    <a href="biochemistry.html" class="nav-link text-gray-700 hover:text-gray-900 font-medium">Biochemistry</a>
+                    <a href="culture.html" class="nav-link text-gray-700 hover:text-gray-900 font-medium">Culture</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cultural Hero -->
+    <section class="pt-24 pb-16 cultural-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="fade-in">
+                <h1 class="font-display text-5xl font-bold mb-4">
+                    <span class="text-gray-800">Centuries of Tradition</span>
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Discover the rich cultural heritage and fascinating legends behind China's most celebrated dish, 
+                    from Qing Dynasty courts to modern kitchens
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Historical Timeline -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="font-display text-4xl font-bold mb-4">Historical Timeline</h2>
+                <p class="text-lg text-gray-600">Journey through the evolution of Buddha Jumps Over the Wall</p>
+            </div>
+
+            <div class="timeline-container">
+                <div class="timeline">
+                    <div class="timeline-item active" data-period="qing">
+                        <div class="timeline-content">
+                            <h3 class="font-display text-xl font-semibold mb-2">Qing Dynasty</h3>
+                            <p class="text-sm text-gray-600 mb-3">清朝道光年间 (1821-1850)</p>
+                            <p class="text-sm">Originated in Fuzhou, Fujian Province during the Daoguang Emperor's reign</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item" data-period="zheng">
+                        <div class="timeline-content">
+                            <h3 class="font-display text-xl font-semibold mb-2">Chef Zheng Chunfa</h3>
+                            <p class="text-sm text-gray-600 mb-3">晚清时期 (Late 1800s)</p>
+                            <p class="text-sm">Master chef who perfected the recipe and established "Ju Chun Yuan" restaurant</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item" data-period="republic">
+                        <div class="timeline-content">
+                            <h3 class="font-display text-xl font-semibold mb-2">Republic Era</h3>
+                            <p class="text-sm text-gray-600 mb-3">1912-1949</p>
+                            <p class="text-sm">Gained national prominence as a symbol of Fujian cuisine excellence</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item" data-period="modern">
+                        <div class="timeline-content">
+                            <h3 class="font-display text-xl font-semibold mb-2">Modern Era</h3>
+                            <p class="text-sm text-gray-600 mb-3">1949-Present</p>
+                            <p class="text-sm">Featured in state banquets and recognized as cultural heritage</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 bg-gray-50 rounded-xl p-8">
+                <div id="timeline-details">
+                    <h3 class="font-display text-2xl font-semibold mb-4">The Birth of a Legend</h3>
+                    <p class="text-gray-700 mb-4">
+                        During the Qing Dynasty's Daoguang period (1821-1850), Buddha Jumps Over the Wall emerged from 
+                        the culinary innovation of Fuzhou's elite. Originally named "Fortune and Longevity Complete" (福寿全), 
+                        the dish was created by a government official's wife to impress the Fujian Provincial Governor Zhou Lian.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Origin Stories -->
+    <section class="py-16 cultural-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="font-display text-4xl font-bold mb-4">Legends & Stories</h2>
+                <p class="text-lg text-gray-600">Multiple tales explain how this legendary dish got its name</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="story-card rounded-xl p-6">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white text-2xl"
+                         style="background-color: var(--jade-green);">📖</div>
+                    <h3 class="font-display text-xl font-semibold mb-3">The Scholar's Journey</h3>
+                    <p class="text-sm text-gray-700 mb-4">
+                        A traveling scholar preserved food in a wine jar during his journey. When he arrived in Fuzhou, 
+                        the aroma of his heated meal tempted a monk to jump over the monastery wall.
+                    </p>
+                </div>
+
+                <div class="story-card rounded-xl p-6">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white text-2xl"
+                         style="background-color: var(--warm-coral);">🏮</div>
+                    <h3 class="font-display text-xl font-semibold mb-3">The Beggar's Discovery</h3>
+                    <p class="text-sm text-gray-700 mb-4">
+                        Beggars collected leftover food in wine jars. A restaurant owner discovered their mixed leftovers 
+                        created an incredibly aromatic stew, inspiring the refined version.
+                    </p>
+                </div>
+
+                <div class="story-card rounded-xl p-6">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white text-2xl"
+                         style="background-color: var(--soft-gold);">🎭</div>
+                    <h3 class="font-display text-xl font-semibold mb-3">The Poet's Inspiration</h3>
+                    <p class="text-sm text-gray-700 mb-4">
+                        At a literary gathering, guests were so impressed by the dish that one poet wrote: 
+                        "The aroma spreads to neighboring homes, even Buddha would jump over the wall."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Significance -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <h2 class="font-display text-4xl font-bold mb-6">Cultural Significance</h2>
+                    <p class="text-lg text-gray-700 mb-6">
+                        Buddha Jumps Over the Wall represents more than culinary excellence—it embodies Chinese cultural 
+                        values of hospitality, craftsmanship, and the pursuit of harmony between ingredients and preparation methods.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold"
+                                 style="background-color: var(--jade-green);">✓</div>
+                            <span class="text-gray-700">Symbol of prosperity and good fortune</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold"
+                                 style="background-color: var(--warm-coral);">✓</div>
+                            <span class="text-gray-700">Featured in important celebrations and banquets</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold"
+                                 style="background-color: var(--soft-gold);">✓</div>
+                            <span class="text-gray-700">Represents Fujian cuisine's highest achievement</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="map-container rounded-xl p-8">
+                        <h3 class="font-display text-2xl font-semibold mb-6 text-center">Regional Variations</h3>
+                        <div class="space-y-4">
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <h4 class="font-semibold mb-2">Fuzhou Style</h4>
+                                <p class="text-sm text-gray-600">Traditional recipe with emphasis on seafood and Shaoxing wine</p>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <h4 class="font-semibold mb-2">Taiwanese Adaptation</h4>
+                                <p class="text-sm text-gray-600">Incorporates local ingredients and slightly sweeter profile</p>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <h4 class="font-semibold mb-2">Modern Fusion</h4>
+                                <p class="text-sm text-gray-600">Contemporary interpretations with sustainable ingredients</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preparation Philosophy -->
+    <section class="py-16 cultural-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="font-display text-4xl font-bold mb-4">Culinary Philosophy</h2>
+                <p class="text-lg text-gray-600">The artistry and patience behind traditional preparation</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="origin-story rounded-xl p-6 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white text-2xl"
+                         style="background-color: var(--jade-green);">⏰</div>
+                    <h3 class="font-display text-lg font-semibold mb-2">Time</h3>
+                    <p class="text-sm text-gray-600">3+ days of preparation and cooking</p>
+                </div>
+
+                <div class="origin-story rounded-xl p-6 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white text-2xl"
+                         style="background-color: var(--warm-coral);">🔥</div>
+                    <h3 class="font-display text-lg font-semibold mb-2">Heat Control</h3>
+                    <p class="text-sm text-gray-600">Precise temperature management</p>
+                </div>
+
+                <div class="origin-story rounded-xl p-6 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white text-2xl"
+                         style="background-color: var(--soft-gold);">🍶</div>
+                    <h3 class="font-display text-lg font-semibold mb-2">Wine Selection</h3>
+                    <p class="text-sm text-gray-600">Aged Shaoxing wine for depth</p>
+                </div>
+
+                <div class="origin-story rounded-xl p-6 text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white text-2xl"
+                         style="background-color: var(--charcoal);">🎭</div>
+                    <h3 class="font-display text-lg font-semibold mb-2">Harmony</h3>
+                    <p class="text-sm text-gray-600">Balance of flavors and textures</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-lg mb-2">Buddha Jumps Over the Wall Biochemistry Research</p>
+            <p class="text-gray-400">© 2025 Educational content for scientific exploration.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

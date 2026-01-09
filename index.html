@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddha Jumps Over the Wall: The Biochemistry of Tradition</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    
+    <style>
+        :root {
+            --jade-green: #2D5A3D;
+            --warm-coral: #E67E4D;
+            --soft-gold: #D4AF37;
+            --warm-cream: #FAF7F2;
+            --charcoal: #2C3E50;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--warm-cream);
+            color: var(--charcoal);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(45, 90, 61, 0.1) 0%, rgba(230, 126, 77, 0.1) 100%);
+        }
+        
+        .ingredient-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        
+        .ingredient-card:hover {
+            transform: translateY(-8px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(45, 90, 61, 0.2);
+        }
+        
+        .molecule-viewer {
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.9) 0%, rgba(250, 247, 242, 0.95) 100%);
+            border: 2px solid rgba(45, 90, 61, 0.1);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--warm-coral);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .category-filter {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .category-filter.active {
+            background: var(--jade-green);
+            color: white;
+        }
+        
+        .category-filter:hover {
+            background: var(--warm-coral);
+            color: white;
+        }
+        
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .particle-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <h1 class="font-display text-xl font-bold text-gray-800">Buddha Jumps Biochemistry Research</h1>
+                </div>
+                <div class="flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-gray-900 font-medium">Home</a>
+                    <a href="biochemistry.html" class="nav-link text-gray-700 hover:text-gray-900 font-medium">Biochemistry</a>
+                    <a href="culture.html" class="nav-link text-gray-700 hover:text-gray-900 font-medium">Culture</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center hero-bg pt-16">
+        <div class="particle-bg" id="particles"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="fade-in">
+                <h1 class="font-display text-5xl md:text-7xl font-bold mb-6">
+                    <span class="text-gray-800">Buddha Jumps Over the Wall</span><br>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                    Exploring the intricate biochemistry behind China's most legendary dish, 
+                    where tradition meets molecular science
+                </p>
+            </div>
+            
+            <div class="relative floating-animation">
+                <img src="hero-buddha-jump.jpg" alt="Buddha Jumps Over the Wall" 
+                     class="w-full max-w-4xl mx-auto rounded-2xl shadow-2xl">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Ingredient Explorer -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-display text-4xl font-bold mb-4">Interactive Ingredient Explorer</h2>
+                <p class="text-xl text-gray-600">Click on ingredients to explore their molecular composition</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Category Filters -->
+                <div class="lg:col-span-1">
+                    <h3 class="font-display text-2xl font-semibold mb-6">Macromolecules</h3>
+                    <div class="space-y-3">
+                        <div class="category-filter active px-4 py-3 rounded-lg border" data-category="all">
+                            <span class="font-medium">All</span>
+                        </div>
+                        <div class="category-filter px-4 py-3 rounded-lg border" data-category="proteins">
+                            <span class="font-medium">Proteins</span>
+                        </div>
+                        <div class="category-filter px-4 py-3 rounded-lg border" data-category="carbohydrates">
+                            <span class="font-medium">Carbohydrates</span>
+                        </div>
+                        <div class="category-filter px-4 py-3 rounded-lg border" data-category="lipids">
+                            <span class="font-medium">Lipids</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ingredient Grid -->
+                <div class="lg:col-span-2">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="ingredient-grid">
+                        <!-- Ingredients will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Molecular Viewer -->
+                <div class="lg:col-span-1">
+                    <div class="molecule-viewer rounded-xl p-6 h-96 flex flex-col justify-center items-center">
+                        <div id="molecule-display" class="text-center">
+                            <div class="w-32 h-32 mx-auto mb-4 bg-gray-200 rounded-full flex items-center justify-center">
+                                <span class="text-4xl">🧬</span>
+                            </div>
+                            <h4 class="font-display text-xl font-semibold mb-2">Select an Ingredient</h4>
+                            <p class="text-gray-600 text-sm">Choose an ingredient to view its molecular structure</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Polymer Breakdown Preview -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-display text-4xl font-bold mb-4">Polymer to Monomer Breakdown</h2>
+                <p class="text-xl text-gray-600">Understanding how complex molecules become absorbable nutrients</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl p-6 text-center shadow-lg border border-gray-200">
+                    <img src="protein-breakdown.jpg" alt="Protein breakdown" 
+                         class="w-full h-32 object-cover rounded-lg mb-4">
+                    <h3 class="font-display text-xl font-semibold mb-3">Proteins → Amino Acids</h3>
+                    <p class="text-sm text-gray-600 mb-3">
+                        Long protein polymers are broken down by pepsin and trypsin into individual amino acids
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 text-center shadow-lg border border-gray-200">
+                    <img src="carbohydrate-breakdown.jpg" alt="Carbohydrate breakdown" 
+                         class="w-full h-32 object-cover rounded-lg mb-4">
+                    <h3 class="font-display text-xl font-semibold mb-3">Carbohydrates → Glucose</h3>
+                    <p class="text-sm text-gray-600 mb-3">
+                        Complex starches are hydrolyzed by amylase into simple glucose molecules
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 text-center shadow-lg border border-gray-200">
+                    <img src="lipid-breakdown.jpg" alt="Lipid breakdown" 
+                         class="w-full h-32 object-cover rounded-lg mb-4">
+                    <h3 class="font-display text-xl font-semibold mb-3">Lipids → Fatty Acids</h3>
+                    <p class="text-sm text-gray-600 mb-3">
+                        Triglycerides are broken down by lipase into fatty acids and glycerol
+                    </p>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="biochemistry.html" 
+                   class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white transition-all hover:transform hover:scale-105"
+                   style="background-color: var(--jade-green);">
+                    Explore Detailed Biochemistry
+                    <span class="ml-2">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scientific Overview -->
+    <section class="py-20 hero-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <h2 class="font-display text-4xl font-bold mb-6">The Biochemistry of Tradition</h2>
+                    <p class="text-lg text-gray-700 mb-6">
+                        Buddha Jumps Over the Wall represents a perfect harmony of culinary artistry and biochemical complexity. 
+                        Each ingredient contributes unique macromolecules that our bodies meticulously break down through 
+                        enzymatic reactions, transforming gourmet delicacies into essential nutrients.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="biochemistry.html" class="px-6 py-3 rounded-lg font-medium text-white transition-all hover:transform hover:scale-105" 
+                           style="background-color: var(--jade-green);">
+                            Explore Biochemistry
+                        </a>
+                        <a href="culture.html" class="px-6 py-3 rounded-lg font-medium border-2 transition-all hover:transform hover:scale-105"
+                           style="border-color: var(--warm-coral); color: var(--warm-coral);">
+                            Learn History
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="bg-white rounded-2xl p-8 shadow-xl">
+                        <h3 class="font-display text-2xl font-semibold mb-6">Key Biochemical Processes</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-bold"
+                                     style="background-color: var(--jade-green);">1</div>
+                                <div>
+                                    <h4 class="font-semibold">Protein Hydrolysis</h4>
+                                    <p class="text-sm text-gray-600">Collagen breakdown into amino acids</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-bold"
+                                     style="background-color: var(--warm-coral);">2</div>
+                                <div>
+                                    <h4 class="font-semibold">Enzymatic Digestion</h4>
+                                    <p class="text-sm text-gray-600">Pepsin and trypsin activity</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center text-white text-xl font-bold"
+                                     style="background-color: var(--soft-gold);">3</div>
+                                <div>
+                                    <h4 class="font-semibold">Nutrient Absorption</h4>
+                                    <p class="text-sm text-gray-600">Intestinal uptake of monomers</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-lg mb-2">Buddha Jumps Over the Wall Biochemistry Research</p>
+            <p class="text-gray-400">© 2025 Educational content for scientific exploration.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

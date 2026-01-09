@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biochemistry of Buddha Jumps Over the Wall</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Core Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    
+    <style>
+        :root {
+            --jade-green: #2D5A3D;
+            --warm-coral: #E67E4D;
+            --soft-gold: #D4AF37;
+            --warm-cream: #FAF7F2;
+            --charcoal: #2C3E50;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--warm-cream);
+            color: var(--charcoal);
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .molecular-bg {
+            background: radial-gradient(circle at 30% 70%, rgba(45, 90, 61, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 30%, rgba(230, 126, 77, 0.1) 100%);
+        }
+        
+        .enzyme-simulator {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(250, 247, 242, 0.95) 100%);
+            border: 2px solid rgba(45, 90, 61, 0.1);
+        }
+        
+        .ph-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, #ff0000 0%, #ffff00 50%, #00ff00 100%);
+            outline: none;
+        }
+        
+        .ph-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--jade-green);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        .reaction-step {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .reaction-step.active {
+            background: var(--jade-green);
+            color: white;
+        }
+        
+        .enzyme-structure {
+            transition: all 0.5s ease;
+        }
+        
+        .enzyme-structure.denatured {
+            filter: contrast(0.8) brightness(0.9);
+            transform: scale(0.95);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--warm-coral);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .polymer-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(45, 90, 61, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .polymer-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(45, 90, 61, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <h1 class="font-display text-xl font-bold text-gray-800">Buddha Jumps Biochemistry Research</h1>
+                </div>
+                <div class="flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-gray-900 font-medium">Home</a>
+                    <a href="biochemistry.html" class="nav-link text-gray-700 hover:text-gray-900 font-medium">Biochemistry</a>
+                    <a href="culture.html" class="nav-link text-gray-700 hover:text-gray-900 font-medium">Culture</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="pt-24 pb-12 molecular-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="fade-in">
+                <h1 class="font-display text-5xl font-bold mb-4">
+                    <span class="text-gray-800">Molecular Breakdown</span>
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Understanding how our bodies transform the complex macromolecules in Buddha Jumps Over the Wall 
+                    into absorbable nutrients through enzymatic reactions
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Enzyme Reaction Simulator -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="font-display text-4xl font-bold mb-4">Advanced Enzyme Simulator</h2>
+                <p class="text-lg text-gray-600">Select different reactions and adjust environmental conditions</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Reaction Selection -->
+                <div class="enzyme-simulator rounded-xl p-6">
+                    <h3 class="font-display text-xl font-semibold mb-4">Select Reaction</h3>
+                    <select id="reaction-select" class="w-full p-3 border border-gray-300 rounded-lg mb-4">
+                        <option value="protein_hydrolysis">Protein Hydrolysis</option>
+                        <option value="carbohydrate_hydrolysis">Carbohydrate Hydrolysis</option>
+                        <option value="lipid_hydrolysis">Lipid Hydrolysis</option>
+                        <option value="alcohol_metabolism">Alcohol Metabolism</option>
+                    </select>
+                    
+                    <div id="equation-display" class="mt-4">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Environmental Controls -->
+                <div class="enzyme-simulator rounded-xl p-6">
+                    <h3 class="font-display text-xl font-semibold mb-4">Environmental Controls</h3>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">pH Level</label>
+                        <input type="range" id="ph-slider" class="ph-slider w-full" min="1" max="14" value="7" step="0.1">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>Acidic (1)</span>
+                            <span id="ph-value">7.0</span>
+                            <span>Basic (14)</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Temperature</label>
+                        <input type="range" id="temp-slider" class="ph-slider w-full" min="20" max="100" value="37" step="1">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>20°C</span>
+                            <span id="temp-value">37°C</span>
+                            <span>100°C</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h4 class="font-semibold mb-2">Enzyme Status</h4>
+                        <div id="enzyme-status" class="text-sm">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enzyme Visualization -->
+                <div class="enzyme-simulator rounded-xl p-6">
+                    <h3 class="font-display text-xl font-semibold mb-4">Enzyme Structure</h3>
+                    <div class="text-center">
+                        <img id="enzyme-image" src="pepsin-enzyme.jpg" 
+                             alt="Enzyme Structure" class="enzyme-structure w-full max-w-xs mx-auto rounded-lg mb-4">
+                        <p class="text-sm text-gray-600 mb-2">
+                            3D structure of the selected enzyme
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Reaction Rate & Info -->
+                <div class="enzyme-simulator rounded-xl p-6">
+                    <h3 class="font-display text-xl font-semibold mb-4">Reaction Analysis</h3>
+                    <div id="reaction-rate" class="text-center space-y-3">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Polymer Breakdown Visualization -->
+    <section class="py-16 hero-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="font-display text-4xl font-bold mb-4">Polymer to Monomer Breakdown</h2>
+                <p class="text-lg text-gray-600">Detailed visualization of how complex molecules are broken down</p>
+            </div>
+
+            <div id="polymer-breakdown">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Digestive Pathway -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="font-display text-4xl font-bold mb-4">Digestive Pathway</h2>
+                <p class="text-lg text-gray-600">Step-by-step breakdown of macromolecules in the digestive system</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="reaction-step bg-white rounded-xl p-6 text-center shadow-lg" data-step="1">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white text-2xl font-bold"
+                         style="background-color: var(--jade-green);">1</div>
+                    <h3 class="font-display text-xl font-semibold mb-2">Mouth</h3>
+                    <p class="text-sm text-gray-600 mb-3">Mechanical breakdown begins</p>
+                    <div class="text-xs text-gray-500">
+                        <p><strong>Enzyme:</strong> Salivary amylase</p>
+                        <p><strong>Target:</strong> Starch</p>
+                    </div>
+                </div>
+
+                <div class="reaction-step bg-white rounded-xl p-6 text-center shadow-lg" data-step="2">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white text-2xl font-bold"
+                         style="background-color: var(--warm-coral);">2</div>
+                    <h3 class="font-display text-xl font-semibold mb-2">Stomach</h3>
+                    <p class="text-sm text-gray-600 mb-3">Protein denaturation</p>
+                    <div class="text-xs text-gray-500">
+                        <p><strong>Enzyme:</strong> Pepsin</p>
+                        <p><strong>Target:</strong> Proteins</p>
+                    </div>
+                </div>
+
+                <div class="reaction-step bg-white rounded-xl p-6 text-center shadow-lg" data-step="3">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white text-2xl font-bold"
+                         style="background-color: var(--soft-gold);">3</div>
+                    <h3 class="font-display text-xl font-semibold mb-2">Small Intestine</h3>
+                    <p class="text-sm text-gray-600 mb-3">Complete hydrolysis</p>
+                    <div class="text-xs text-gray-500">
+                        <p><strong>Enzymes:</strong> Trypsin, lipase</p>
+                        <p><strong>Target:</strong> All macromolecules</p>
+                    </div>
+                </div>
+
+                <div class="reaction-step bg-white rounded-xl p-6 text-center shadow-lg" data-step="4">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white text-2xl font-bold"
+                         style="background-color: var(--charcoal);">4</div>
+                    <h3 class="font-display text-xl font-semibold mb-2">Absorption</h3>
+                    <p class="text-sm text-gray-600 mb-3">Nutrient uptake</p>
+                    <div class="text-xs text-gray-500">
+                        <p><strong>Products:</strong> Amino acids, sugars</p>
+                        <p><strong>Location:</strong> Intestinal villi</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 bg-white rounded-xl p-8 shadow-lg">
+                <h3 class="font-display text-2xl font-semibold mb-6 text-center">Detailed Reaction Mechanisms</h3>
+                <div id="reaction-details" class="text-center text-gray-500">
+                    Click on a step above to see detailed molecular reactions and polymer-to-monomer breakdown
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nutritional Analysis -->
+    <section class="py-16 hero-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="font-display text-4xl font-bold mb-4">Nutritional Composition</h2>
+                <p class="text-lg text-gray-600">Comparative analysis of key ingredients in Buddha Jumps Over the Wall</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="font-display text-2xl font-semibold mb-6">Amino Acid Profile</h3>
+                    <div id="amino-acid-chart" style="height: 400px;"></div>
+                </div>
+                
+                <div>
+                    <h3 class="font-display text-2xl font-semibold mb-6">Macromolecule Distribution</h3>
+                    <div id="macromolecule-chart" style="height: 400px;"></div>
+                </div>
+            </div>
+
+            <div class="mt-12 bg-white rounded-xl p-8">
+                <h3 class="font-display text-2xl font-semibold mb-6 text-center">Key Nutritional Insights</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white text-2xl"
+                             style="background-color: var(--jade-green);">🧬</div>
+                        <h4 class="font-semibold mb-2">High-Quality Proteins</h4>
+                        <p class="text-sm text-gray-600">Complete amino acid profile with high biological value</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white text-2xl"
+                             style="background-color: var(--warm-coral);">⚡</div>
+                        <h4 class="font-semibold mb-2">Rich in Collagen</h4>
+                        <p class="text-sm text-gray-600">Supports joint health and skin elasticity</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center text-white text-2xl"
+                             style="background-color: var(--soft-gold);">🌊</div>
+                        <h4 class="font-semibold mb-2">Essential Minerals</h4>
+                        <p class="text-sm text-gray-600">High in zinc, iron, and selenium from seafood</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-lg mb-2">Buddha Jumps Over the Wall Biochemistry Research</p>
+            <p class="text-gray-400">© 2025 Educational content for scientific exploration.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
